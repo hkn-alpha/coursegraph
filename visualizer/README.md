@@ -1,46 +1,51 @@
-# Getting Started with Create React App
+# Curriculum Graph Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React app uses [dagre-d3-react](https://github.com/justin-coberly/dagre-d3-react) to display curriculum graphs. Curriculum graph styles are defined in the [HKN Wiki](https://github.com/hkn-alpha/wiki), but a rough copy of the styles is copied here for easier local development.
 
-## Available Scripts
+## Specifying Edges and Nodes
 
-In the project directory, you can run:
+Nodes are specified as an export `nodes` from `src/nodes.ts`, where
 
-### `npm start`
+```
+typeof nodes = {
+    id: string;
+    label: string;
+    dept: string;
+    num: string;
+}[]
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Edges are specified as an export `edges` from `src/edges.ts`, where
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+typeof edges = [
+    string, // source node id
+    string, // dest node id
+    boolean // true iff corequisite relation
+][]
+```
 
-### `npm test`
+The easiest way to generate these files is with `build.py` in the root folder.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Building Graphs
 
-### `npm run build`
+The React root element is customizable to support embedding curriculum graphs into other pages not managed by React.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Run
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+REACT_APP_ROOT_ELEMENT=html_id_of_root npm run build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+to build the graph. This will generate a file `main.<hash>.js` located in the `build/` folder. Copy this to your application, and include it in a page that has an HTML element with the ID you specified above. The graph will automatically render.
 
-### `npm run eject`
+### IMPORTANT
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To create a visually appealing graph, you may need to tweak some Dagre settings, particularly `rankdir` and `align`. `App.tsx` contains some comments about this, and you
+can find more information at the [Dagre docs](https://github.com/dagrejs/dagre/wiki#configuring-the-layout).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ALWAYS CHECK THE GRAPH'S APPEARANCE LOCALLY FIRST!! See below for instructions.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Debugging Locally
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Run `npm start` in this folder, and open `https://localhost:3000` in your browser to see a live copy of the current graph (you'll need edges and nodes defined first).

@@ -26,9 +26,8 @@ const CURVE_COREQ_CONFIG = {
 };
 
 const DAGRE_CONFIG = {
-  rankdir: "BT",
-  // align: "UL",
-  align: "UL",
+  rankdir: "BT", // use LR for non-EE
+  align: "UL", // always use UL
   ranker: "longest-path",
   ranksep: 70,
   nodesep: 50,
