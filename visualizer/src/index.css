@@ -1,0 +1,29 @@
+.coursename {
+  text-align: center;
+  font-size: 14px;
+  color: #0f2040;
+  width: 100%;
+}
+
+.containerdiv {
+  width: 200px;
+  height: 75px;
+  white-space: normal;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Arrowhead */
+marker path {
+  fill: #0f2040;
+  stroke: #0f2040;
+}
+
+foreignObject {
+  overflow: visible;
+}
